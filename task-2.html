@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music Player</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .player {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 300px;
+    }
+
+    .player h2 {
+      margin: 10px 0 5px;
+    }
+
+    .player h3 {
+      margin: 0;
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .controls button {
+      background: #6e8efb;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      padding: 10px 15px;
+      margin: 0 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .controls button:hover {
+      background: #4b6cb7;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="player">
+    <h2 id="song-title">Song Title</h2>
+    <h3 id="artist-name">Artist</h3>
+
+    <div class="controls">
+      <button onclick="prevSong()">⏮</button>
+      <button onclick="togglePlay()">▶️ / ⏸</button>
+      <button onclick="nextSong()">⏭</button>
+    </div>
+
+    <audio id="audio-player" src=""></audio>
+  </div>
+
+  <script>
+    const songs = [
+      {
+        title: "Relaxing Nature",
+        artist: "FreeSounds",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+      },
+      {
+        title: "Inspiring Background",
+        artist: "AudioHub",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+      },
+      {
+        title: "Smooth Vibes",
+        artist: "RoyaltyFree",
+        src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+      }
+    ];
+
+    let currentIndex = 0;
+    const audio = document.getElementById("audio-player");
+    const title = document.getElementById("song-title");
+    const artist = document.getElementById("artist-name");
+
+    function loadSong(index) {
+      const song = songs[index];
+      title.textContent = song.title;
+      artist.textContent = song.artist;
+      audio.src = song.src;
+    }
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+    function nextSong() {
+      currentIndex = (currentIndex + 1) % songs.length;
+      loadSong(currentIndex);
+      audio.play();
+    }
+
+    function prevSong() {
+      currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+      loadSong(currentIndex);
+      audio.play();
+    }
+
+    // Load the first song on page load
+    loadSong(currentIndex);
+  </script>
+
+</body>
+</html>
